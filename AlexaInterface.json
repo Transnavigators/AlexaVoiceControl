@@ -1,0 +1,336 @@
+{
+  "intents": [
+    {
+      "name": "AMAZON.CancelIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.HelpIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.StopIntent",
+      "samples": []
+    },
+    {
+      "name": "LocateMe",
+      "samples": [
+        "take my wheelchair to me",
+        "bring me my wheelchair",
+        "bring my wheelchair to me",
+        "give me my wheelchair",
+        "bring me to my wheelchair",
+        "get my wheelchair",
+        "I need my wheelchair"
+      ],
+      "slots": []
+    },
+    {
+      "name": "MoveForward",
+      "samples": [
+        "move {Distance}",
+        "move forward {Distance}",
+        "go forward {Distance}",
+        "go ahead {Distance}",
+        "go {Distance}",
+        "move {Distance} feet",
+        "move {Distance} meters"
+      ],
+      "slots": [
+        {
+          "name": "Distance",
+          "type": "AMAZON.NUMBER",
+          "samples": [
+            "{Distance} meters",
+            "{Distance} feet",
+            "{Distance} yards"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MoveLeft",
+      "samples": [
+        "move left {Degrees}",
+        "left {Degrees}",
+        "left {Degrees} degrees",
+        "move left {Degrees} degrees",
+        "turn left {Degrees}",
+        "turn left {Degrees} degrees"
+      ],
+      "slots": [
+        {
+          "name": "Degrees",
+          "type": "AMAZON.NUMBER",
+          "samples": [
+            "{Degrees} degrees",
+            "{Degrees}"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MoveRight",
+      "samples": [
+        "move right {Degrees}",
+        "move right {Degrees} degrees",
+        "right {Degrees}",
+        "right {Degrees} degrees",
+        "turn right {Degrees}",
+        "turn right {Degrees} degrees"
+      ],
+      "slots": [
+        {
+          "name": "Degrees",
+          "type": "AMAZON.NUMBER",
+          "samples": [
+            "{Degrees} degrees"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MoveTo",
+      "samples": [
+        "move to {Location} {RoomNum}",
+        "bring my wheelchair to {Location} {RoomNum}",
+        "go to {Location} {RoomNum}",
+        "take me to {Location} {RoomNum}",
+        "bring me to {Location} {RoomNum}",
+        "let's go to {Location} {RoomNum}",
+        "I want to go to {Location} {RoomNum}"
+      ],
+      "slots": [
+        {
+          "name": "Location",
+          "type": "Locations",
+          "samples": []
+        },
+        {
+          "name": "RoomNum",
+          "type": "AMAZON.NUMBER",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "Stop",
+      "samples": [
+        "Stop",
+        "Halt",
+        "Wait",
+        "Stop moving",
+        "Don't go",
+        "Freeze"
+      ],
+      "slots": []
+    }
+  ],
+  "types": [
+    {
+      "name": "Locations",
+      "values": [
+        {
+          "id": "SH",
+          "name": {
+            "value": "Shiley",
+            "synonyms": [
+              "Shiley Hall",
+              "SH",
+              "EN",
+              "E.N.",
+              "S.H."
+            ]
+          }
+        },
+        {
+          "id": "FH",
+          "name": {
+            "value": "Franz",
+            "synonyms": [
+              "Franz Hall",
+              "FH",
+              "F.H."
+            ]
+          }
+        },
+        {
+          "id": "LB",
+          "name": {
+            "value": "Library",
+            "synonyms": [
+              "Clark Library",
+              "Lib"
+            ]
+          }
+        },
+        {
+          "id": "MH",
+          "name": {
+            "value": "Mago",
+            "synonyms": [
+              "Mago Hunt",
+              "Mago Hunt Center",
+              "M.H.",
+              "MH"
+            ]
+          }
+        },
+        {
+          "id": "SW",
+          "name": {
+            "value": "Swindells",
+            "synonyms": [
+              "Swindells Hall",
+              "S.W.I.",
+              "S.W."
+            ]
+          }
+        },
+        {
+          "id": "RM",
+          "name": {
+            "value": "Romanaggi",
+            "synonyms": [
+              "Romanaggi Hall",
+              "RH",
+              "R.H."
+            ]
+          }
+        },
+        {
+          "id": "BC",
+          "name": {
+            "value": "Buckley",
+            "synonyms": [
+              "Buckley Center",
+              "BC",
+              "B.C."
+            ]
+          }
+        },
+        {
+          "id": "WH",
+          "name": {
+            "value": "Waldschmidt",
+            "synonyms": [
+              "Waldschmidt Hall",
+              "W.H.",
+              "WH"
+            ]
+          }
+        },
+        {
+          "id": "TY",
+          "name": {
+            "value": "Tyson",
+            "synonyms": [
+              "Tyson Hall",
+              "T.Y.",
+              "TY"
+            ]
+          }
+        },
+        {
+          "id": "ST",
+          "name": {
+            "value": "St. Mary's",
+            "synonyms": [
+              "St. Mary's Student Center",
+              "S.M.",
+              "SM"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "prompts": [
+    {
+      "id": "Elicit.Intent-MoveForward.IntentSlot-Distance",
+      "promptVersion": "1.0",
+      "definitionVersion": "1.0",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "How far?"
+        }
+      ]
+    },
+    {
+      "id": "Elicit.Intent-MoveLeft.IntentSlot-Degrees",
+      "promptVersion": "1.0",
+      "definitionVersion": "1.0",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "How many degrees?"
+        }
+      ]
+    },
+    {
+      "id": "Elicit.Intent-MoveRight.IntentSlot-Degrees",
+      "promptVersion": "1.0",
+      "definitionVersion": "1.0",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "How many degrees?"
+        }
+      ]
+    }
+  ],
+  "dialog": {
+    "version": "1.0",
+    "intents": [
+      {
+        "name": "MoveForward",
+        "confirmationRequired": false,
+        "prompts": {},
+        "slots": [
+          {
+            "name": "Distance",
+            "type": "AMAZON.NUMBER",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicit": "Elicit.Intent-MoveForward.IntentSlot-Distance"
+            }
+          }
+        ]
+      },
+      {
+        "name": "MoveLeft",
+        "confirmationRequired": false,
+        "prompts": {},
+        "slots": [
+          {
+            "name": "Degrees",
+            "type": "AMAZON.NUMBER",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicit": "Elicit.Intent-MoveLeft.IntentSlot-Degrees"
+            }
+          }
+        ]
+      },
+      {
+        "name": "MoveRight",
+        "confirmationRequired": false,
+        "prompts": {},
+        "slots": [
+          {
+            "name": "Degrees",
+            "type": "AMAZON.NUMBER",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicit": "Elicit.Intent-MoveRight.IntentSlot-Degrees"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
