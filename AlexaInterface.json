@@ -1,336 +1,227 @@
 {
-  "intents": [
-    {
-      "name": "AMAZON.CancelIntent",
-      "samples": []
-    },
-    {
-      "name": "AMAZON.HelpIntent",
-      "samples": []
-    },
-    {
-      "name": "AMAZON.StopIntent",
-      "samples": []
-    },
-    {
-      "name": "LocateMe",
-      "samples": [
-        "take my wheelchair to me",
-        "bring me my wheelchair",
-        "bring my wheelchair to me",
-        "give me my wheelchair",
-        "bring me to my wheelchair",
-        "get my wheelchair",
-        "I need my wheelchair"
-      ],
-      "slots": []
-    },
-    {
-      "name": "MoveForward",
-      "samples": [
-        "move {Distance}",
-        "move forward {Distance}",
-        "go forward {Distance}",
-        "go ahead {Distance}",
-        "go {Distance}",
-        "move {Distance} feet",
-        "move {Distance} meters"
-      ],
-      "slots": [
-        {
-          "name": "Distance",
-          "type": "AMAZON.NUMBER",
-          "samples": [
-            "{Distance} meters",
-            "{Distance} feet",
-            "{Distance} yards"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "MoveLeft",
-      "samples": [
-        "move left {Degrees}",
-        "left {Degrees}",
-        "left {Degrees} degrees",
-        "move left {Degrees} degrees",
-        "turn left {Degrees}",
-        "turn left {Degrees} degrees"
-      ],
-      "slots": [
-        {
-          "name": "Degrees",
-          "type": "AMAZON.NUMBER",
-          "samples": [
-            "{Degrees} degrees",
-            "{Degrees}"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "MoveRight",
-      "samples": [
-        "move right {Degrees}",
-        "move right {Degrees} degrees",
-        "right {Degrees}",
-        "right {Degrees} degrees",
-        "turn right {Degrees}",
-        "turn right {Degrees} degrees"
-      ],
-      "slots": [
-        {
-          "name": "Degrees",
-          "type": "AMAZON.NUMBER",
-          "samples": [
-            "{Degrees} degrees"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "MoveTo",
-      "samples": [
-        "move to {Location} {RoomNum}",
-        "bring my wheelchair to {Location} {RoomNum}",
-        "go to {Location} {RoomNum}",
-        "take me to {Location} {RoomNum}",
-        "bring me to {Location} {RoomNum}",
-        "let's go to {Location} {RoomNum}",
-        "I want to go to {Location} {RoomNum}"
-      ],
-      "slots": [
-        {
-          "name": "Location",
-          "type": "Locations",
-          "samples": []
-        },
-        {
-          "name": "RoomNum",
-          "type": "AMAZON.NUMBER",
-          "samples": []
-        }
-      ]
-    },
-    {
-      "name": "Stop",
-      "samples": [
-        "Stop",
-        "Halt",
-        "Wait",
-        "Stop moving",
-        "Don't go",
-        "Freeze"
-      ],
-      "slots": []
-    }
-  ],
-  "types": [
-    {
-      "name": "Locations",
-      "values": [
-        {
-          "id": "SH",
-          "name": {
-            "value": "Shiley",
-            "synonyms": [
-              "Shiley Hall",
-              "SH",
-              "EN",
-              "E.N.",
-              "S.H."
-            ]
+  "languageModel": {
+    "types": [
+      {
+        "name": "Locations",
+        "values": [
+          {
+            "id": null,
+            "name": {
+              "value": "Bed",
+              "synonyms": [
+                "cot",
+                "cradle",
+                "crib",
+                "berth",
+                "brass bed",
+                "bunk bed",
+                "camp bed",
+                "canopy bed",
+                "captain's bed",
+                "daybed",
+                "featherbed",
+                "Hide-A-Bed",
+                "Murphy bed",
+                "sofa bed",
+                "spool bed",
+                "trundle bed",
+                "waterbed",
+                "divan",
+                "futon",
+                "four-poster"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Couch",
+              "synonyms": [
+                "sofa",
+                "settee",
+                "love seat",
+                "chesterfield",
+                "davenport",
+                "studio couch"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Chair",
+              "synonyms": [
+                "seat",
+                "bench",
+                "stool",
+                "settle",
+                "stall",
+                "pew",
+                "seating"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Desk",
+              "synonyms": [
+                "bureau",
+                "escritoire",
+                "secretaire",
+                "rolltop desk",
+                "carrel",
+                "workstation"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Table",
+              "synonyms": [
+                "stand",
+                "dining table",
+                "kitchen table",
+                "coffee table",
+                "counter",
+                "work surface",
+                "worktable",
+                "workbench",
+                "bar",
+                "buffet",
+                "nightstand"
+              ]
+            }
           }
-        },
-        {
-          "id": "FH",
-          "name": {
-            "value": "Franz",
-            "synonyms": [
-              "Franz Hall",
-              "FH",
-              "F.H."
-            ]
-          }
-        },
-        {
-          "id": "LB",
-          "name": {
-            "value": "Library",
-            "synonyms": [
-              "Clark Library",
-              "Lib"
-            ]
-          }
-        },
-        {
-          "id": "MH",
-          "name": {
-            "value": "Mago",
-            "synonyms": [
-              "Mago Hunt",
-              "Mago Hunt Center",
-              "M.H.",
-              "MH"
-            ]
-          }
-        },
-        {
-          "id": "SW",
-          "name": {
-            "value": "Swindells",
-            "synonyms": [
-              "Swindells Hall",
-              "S.W.I.",
-              "S.W."
-            ]
-          }
-        },
-        {
-          "id": "RM",
-          "name": {
-            "value": "Romanaggi",
-            "synonyms": [
-              "Romanaggi Hall",
-              "RH",
-              "R.H."
-            ]
-          }
-        },
-        {
-          "id": "BC",
-          "name": {
-            "value": "Buckley",
-            "synonyms": [
-              "Buckley Center",
-              "BC",
-              "B.C."
-            ]
-          }
-        },
-        {
-          "id": "WH",
-          "name": {
-            "value": "Waldschmidt",
-            "synonyms": [
-              "Waldschmidt Hall",
-              "W.H.",
-              "WH"
-            ]
-          }
-        },
-        {
-          "id": "TY",
-          "name": {
-            "value": "Tyson",
-            "synonyms": [
-              "Tyson Hall",
-              "T.Y.",
-              "TY"
-            ]
-          }
-        },
-        {
-          "id": "ST",
-          "name": {
-            "value": "St. Mary's",
-            "synonyms": [
-              "St. Mary's Student Center",
-              "S.M.",
-              "SM"
-            ]
-          }
-        }
-      ]
-    }
-  ],
-  "prompts": [
-    {
-      "id": "Elicit.Intent-MoveForward.IntentSlot-Distance",
-      "promptVersion": "1.0",
-      "definitionVersion": "1.0",
-      "variations": [
-        {
-          "type": "PlainText",
-          "value": "How far?"
-        }
-      ]
-    },
-    {
-      "id": "Elicit.Intent-MoveLeft.IntentSlot-Degrees",
-      "promptVersion": "1.0",
-      "definitionVersion": "1.0",
-      "variations": [
-        {
-          "type": "PlainText",
-          "value": "How many degrees?"
-        }
-      ]
-    },
-    {
-      "id": "Elicit.Intent-MoveRight.IntentSlot-Degrees",
-      "promptVersion": "1.0",
-      "definitionVersion": "1.0",
-      "variations": [
-        {
-          "type": "PlainText",
-          "value": "How many degrees?"
-        }
-      ]
-    }
-  ],
-  "dialog": {
-    "version": "1.0",
+        ]
+      }
+    ],
     "intents": [
       {
+        "name": "AMAZON.CancelIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.HelpIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.StopIntent",
+        "samples": []
+      },
+      {
+        "name": "LocateMe",
+        "samples": [
+          "Take my wheelchair to me",
+          "Bring me my wheelchair",
+          "Bring my wheelchair to me",
+          "Give me my wheelchair",
+          "Bring me to my wheelchair",
+          "Get my wheelchair",
+          "I need my wheelchair"
+        ],
+        "slots": []
+      },
+      {
         "name": "MoveForward",
-        "confirmationRequired": false,
-        "prompts": {},
+        "samples": [
+          "Move {Distance}",
+          "Move forward {Distance}",
+          "Go forward {Distance}",
+          "Go ahead {Distance}",
+          "Go {Distance}",
+          "Move {Distance} feet",
+          "Move {Distance} meters",
+          "Move forward",
+          "Go",
+          "Move"
+        ],
         "slots": [
           {
             "name": "Distance",
-            "type": "AMAZON.NUMBER",
-            "elicitationRequired": true,
-            "confirmationRequired": false,
-            "prompts": {
-              "elicit": "Elicit.Intent-MoveForward.IntentSlot-Distance"
-            }
+            "type": "AMAZON.NUMBER"
           }
         ]
       },
       {
         "name": "MoveLeft",
-        "confirmationRequired": false,
-        "prompts": {},
+        "samples": [
+          "Move left {Degrees}",
+          "Left {Degrees}",
+          "Left {Degrees} degrees",
+          "Move left {Degrees} degrees",
+          "Turn left {Degrees}",
+          "Turn left {Degrees} degrees",
+          "Turn left",
+          "Move left",
+          "Left"
+        ],
         "slots": [
           {
             "name": "Degrees",
-            "type": "AMAZON.NUMBER",
-            "elicitationRequired": true,
-            "confirmationRequired": false,
-            "prompts": {
-              "elicit": "Elicit.Intent-MoveLeft.IntentSlot-Degrees"
-            }
+            "type": "AMAZON.NUMBER"
           }
         ]
       },
       {
         "name": "MoveRight",
-        "confirmationRequired": false,
-        "prompts": {},
+        "samples": [
+          "Move right {Degrees}",
+          "Move right {Degrees} degrees",
+          "Right {Degrees}",
+          "Right {Degrees} degrees",
+          "Turn right {Degrees}",
+          "Turn right {Degrees} degrees",
+          "Right",
+          "Turn right",
+          "Move right"
+        ],
         "slots": [
           {
             "name": "Degrees",
-            "type": "AMAZON.NUMBER",
-            "elicitationRequired": true,
-            "confirmationRequired": false,
-            "prompts": {
-              "elicit": "Elicit.Intent-MoveRight.IntentSlot-Degrees"
-            }
+            "type": "AMAZON.NUMBER"
           }
         ]
+      },
+      {
+        "name": "MoveTo",
+        "samples": [
+          "Move to my {Location}",
+          "Bring my wheelchair to my {Location}",
+          "Go to my {Location}",
+          "Take me to my {Location}",
+          "Bring me to my {Location}",
+          "Let's go to my  {Location}",
+          "I want to go to my {Location}",
+          "Move to the {Location}",
+          "Bring my wheelchair to the {Location}",
+          "Go to the {Location}",
+          "Take me to the {Location}",
+          "Bring me to the {Location}",
+          "Let's go to the  {Location}",
+          "I want to go to the {Location}"
+        ],
+        "slots": [
+          {
+            "name": "Location",
+            "type": "Locations"
+          }
+        ]
+      },
+      {
+        "name": "Stop",
+        "samples": [
+          "Stop",
+          "Halt",
+          "Wait",
+          "Stop moving",
+          "Don't go",
+          "Freeze"
+        ],
+        "slots": []
       }
-    ]
+    ],
+    "invocationName": "wheelchair"
   }
 }
