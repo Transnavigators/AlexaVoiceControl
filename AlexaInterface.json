@@ -2,7 +2,63 @@
   "languageModel": {
     "types": [
       {
-        "name": "Locations",
+        "name": "AngleUnit",
+        "values": [
+          {
+            "id": null,
+            "name": {
+              "value": "degrees",
+              "synonyms": [
+                "degree"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Direction",
+        "values": [
+          {
+            "id": null,
+            "name": {
+              "value": "Right",
+              "synonyms": []
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Left",
+              "synonyms": []
+            }
+          }
+        ]
+      },
+      {
+        "name": "DistanceUnit",
+        "values": [
+          {
+            "id": null,
+            "name": {
+              "value": "feet",
+              "synonyms": [
+                "foot"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "meters",
+              "synonyms": [
+                "meter"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Location",
         "values": [
           {
             "id": null,
@@ -108,7 +164,14 @@
       },
       {
         "name": "AMAZON.StopIntent",
-        "samples": []
+        "samples": [
+          "Stop",
+          "Halt",
+          "Stop moving",
+          "Don't go",
+          "Freeze",
+          "Wait"
+        ]
       },
       {
         "name": "LocateMe",
@@ -126,100 +189,69 @@
       {
         "name": "MoveForward",
         "samples": [
-          "Move {Distance}",
-          "Move forward {Distance}",
-          "Go forward {Distance}",
-          "Go ahead {Distance}",
-          "Go {Distance}",
-          "Move {Distance} feet",
-          "Move {Distance} meters",
-          "Move forward",
-          "Go",
-          "Move"
+          "Move {distance} {distanceUnit}",
+          "Move forward {distance} {distanceUnit}",
+          "Go forward {distance} {distanceUnit}",
+          "Go ahead {distance} {distanceUnit}",
+          "Go {distance} {distanceUnit}"
         ],
         "slots": [
           {
-            "name": "Distance",
+            "name": "distance",
             "type": "AMAZON.NUMBER"
-          }
-        ]
-      },
-      {
-        "name": "MoveLeft",
-        "samples": [
-          "Move left {Degrees}",
-          "Left {Degrees}",
-          "Left {Degrees} degrees",
-          "Move left {Degrees} degrees",
-          "Turn left {Degrees}",
-          "Turn left {Degrees} degrees",
-          "Turn left",
-          "Move left",
-          "Left"
-        ],
-        "slots": [
+          },
           {
-            "name": "Degrees",
-            "type": "AMAZON.NUMBER"
-          }
-        ]
-      },
-      {
-        "name": "MoveRight",
-        "samples": [
-          "Move right {Degrees}",
-          "Move right {Degrees} degrees",
-          "Right {Degrees}",
-          "Right {Degrees} degrees",
-          "Turn right {Degrees}",
-          "Turn right {Degrees} degrees",
-          "Right",
-          "Turn right",
-          "Move right"
-        ],
-        "slots": [
-          {
-            "name": "Degrees",
-            "type": "AMAZON.NUMBER"
+            "name": "distanceUnit",
+            "type": "DistanceUnit"
           }
         ]
       },
       {
         "name": "MoveTo",
         "samples": [
-          "Move to my {Location}",
-          "Bring my wheelchair to my {Location}",
-          "Go to my {Location}",
-          "Take me to my {Location}",
-          "Bring me to my {Location}",
-          "Let's go to my  {Location}",
-          "I want to go to my {Location}",
-          "Move to the {Location}",
-          "Bring my wheelchair to the {Location}",
-          "Go to the {Location}",
-          "Take me to the {Location}",
-          "Bring me to the {Location}",
-          "Let's go to the  {Location}",
-          "I want to go to the {Location}"
+          "Move to my {location}",
+          "Bring my wheelchair to my {location}",
+          "Go to my {location}",
+          "Take me to my {location}",
+          "Bring me to my {location}",
+          "Let's go to my  {location}",
+          "I want to go to my {location}",
+          "Move to the {location}",
+          "Bring my wheelchair to the {location}",
+          "Go to the {location}",
+          "Take me to the {location}",
+          "Bring me to the {location}",
+          "Let's go to the  {location}",
+          "I want to go to the {location}"
         ],
         "slots": [
           {
-            "name": "Location",
-            "type": "Locations"
+            "name": "location",
+            "type": "Location"
           }
         ]
       },
       {
-        "name": "Stop",
+        "name": "Turn",
         "samples": [
-          "Stop",
-          "Halt",
-          "Wait",
-          "Stop moving",
-          "Don't go",
-          "Freeze"
+          "{direction} {angle} {angleUnit}",
+          "Move {direction} {angle} {angleUnit}",
+          "Turn {direction} {angle} {angleUnit}"
         ],
-        "slots": []
+        "slots": [
+          {
+            "name": "angle",
+            "type": "AMAZON.NUMBER"
+          },
+          {
+            "name": "angleUnit",
+            "type": "AngleUnit"
+          },
+          {
+            "name": "direction",
+            "type": "Direction"
+          }
+        ]
       }
     ],
     "invocationName": "wheelchair"

@@ -1,20 +1,3 @@
-'''
-/*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License.
- * A copy of the License is located at
- *
- *  http://aws.amazon.com/apache2.0
- *
- * or in the "license" file accompanying this file. This file is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
- */
- '''
-
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTShadowClient
 import logging
@@ -32,27 +15,36 @@ def customCallback(client, userdata, message):
 
 def myCallback(payload, responseStatus, token):
     data = json.loads(payload)['state']
-    moving = data['moving']
-    distance = data['distance']
-    angle = data['angle']
-    print "moving: {} \ndistance: {}\nangle: {}".format(moving, distance, angle)
     
+    print(data);
+    # Delete shadow JSON doc
+    deviceShadowHandler.shadowDelete(customShadowCallback_Delete, 5)
+
+def customShadowCallback_Delete(payload, responseStatus, token):
+    if responseStatus == "timeout":
+        print("Delete request " + token + " time out!")
+    if responseStatus == "accepted":
+        print("~~~~~~~~~~~~~~~~~~~~~~~")
+        print("Delete request with token: " + token + " accepted!")
+        print("~~~~~~~~~~~~~~~~~~~~~~~\n\n")
+    if responseStatus == "rejected":
+        print("Delete request " + token + " rejected!")
     
 
-host = 'a295kd6qvlmey2.iot.us-east-1.amazonaws.com'
-rootCAPath = '/home/transnavigator/certificates/Anthony/root-CA.crt'
-certificatePath = '/home/transnavigator/certificates/Anthony/Pi.cert.pem'
-privateKeyPath = '/home/transnavigator/certificates/Anthony/Pi.private.key'
+host = 'a1vgqh9vgvjzyh.iot.us-east-1.amazonaws.com'
+rootCAPath = 'Certificates/root-CA.crt'
+certificatePath = 'Certificates/Pi.cert.pem'
+privateKeyPath = 'Certificates/Pi.private.key'
 clientId = 'Pi'
 topic = '/get/accepted'
 
 # Configure logging
-logger = logging.getLogger("AWSIoTPythonSDK.core")
-logger.setLevel(logging.INFO)
-streamHandler = logging.StreamHandler()
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-streamHandler.setFormatter(formatter)
-logger.addHandler(streamHandler)
+# logger = logging.getLogger("AWSIoTPythonSDK.core")
+# logger.setLevel(logging.INFO)
+# streamHandler = logging.StreamHandler()
+# formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# streamHandler.setFormatter(formatter)
+# logger.addHandler(streamHandler)
 
 # Init AWSIoTMQTTClient
 myAWSIoTMQTTClient = AWSIoTMQTTClient(clientId)
@@ -67,8 +59,8 @@ myAWSIoTMQTTClient.configureConnectDisconnectTimeout(10)  # 10 sec
 myAWSIoTMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
 
 # Connect and subscribe to AWS IoT
-#myAWSIoTMQTTClient.connect()
-#myAWSIoTMQTTClient.subscribe(topic, 1, customCallback)
+# myAWSIoTMQTTClient.connect()
+# myAWSIoTMQTTClient.subscribe(topic, 1, customCallback)
 
 
 # Shadow Client
@@ -83,7 +75,7 @@ myAWSIoTMQTTShadowClient.configureConnectDisconnectTimeout(10)  # 10 sec
 myAWSIoTMQTTShadowClient.configureMQTTOperationTimeout(5)  # 5 sec
 
 myAWSIoTMQTTShadowClient.connect()
-deviceShadow = myAWSIoTMQTTShadowClient.createShadowHandlerWithName("Pi", True)
-deviceShadow.shadowRegisterDeltaCallback(myCallback);
+deviceShadowHandler = myAWSIoTMQTTShadowClient.createShadowHandlerWithName("Pi", True)
+deviceShadowHandler.shadowRegisterDeltaCallback(myCallback);
 while True:
     time.sleep(1)
