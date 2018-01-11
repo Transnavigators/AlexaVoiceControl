@@ -12,6 +12,15 @@
                 "degree"
               ]
             }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "radians",
+              "synonyms": [
+                "radian"
+              ]
+            }
           }
         ]
       },
@@ -193,7 +202,11 @@
           "Move forward {distance} {distanceUnit}",
           "Go forward {distance} {distanceUnit}",
           "Go ahead {distance} {distanceUnit}",
-          "Go {distance} {distanceUnit}"
+          "Go {distance} {distanceUnit}",
+          "Move",
+          "Move forward",
+          "Go ahead",
+          "Go"
         ],
         "slots": [
           {
@@ -227,16 +240,35 @@
         "slots": [
           {
             "name": "location",
-            "type": "Location"
+            "type": "Location",
+            "samples": [
+              "{location}"
+            ]
           }
         ]
       },
       {
+        "name": "Stop",
+        "samples": [
+          "Stop",
+          "Halt",
+          "Wait",
+          "Stop moving",
+          "Don't go",
+          "Freeze",
+          "Stay"
+        ],
+        "slots": []
+      },
+      {
         "name": "Turn",
         "samples": [
-          "{direction} {angle} {angleUnit}",
           "Move {direction} {angle} {angleUnit}",
-          "Turn {direction} {angle} {angleUnit}"
+          "Turn {direction} {angle} {angleUnit}",
+          "Move {direction}",
+          "Turn {direction}",
+          "{direction} {angle} {angleUnit}",
+          "Turn"
         ],
         "slots": [
           {
@@ -249,11 +281,84 @@
           },
           {
             "name": "direction",
-            "type": "Direction"
+            "type": "Direction",
+            "samples": [
+              "{direction}"
+            ]
           }
         ]
       }
     ],
     "invocationName": "wheelchair"
+  },
+  "prompts": [
+    {
+      "id": "Elicit.Intent-MoveTo.IntentSlot-location",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "Go to where?"
+        }
+      ]
+    },
+    {
+      "id": "Elicit.Intent-Turn.IntentSlot-direction",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "What direction?"
+        }
+      ]
+    }
+  ],
+  "dialog": {
+    "intents": [
+      {
+        "name": "MoveTo",
+        "confirmationRequired": false,
+        "prompts": {},
+        "slots": [
+          {
+            "name": "location",
+            "type": "Location",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicitation": "Elicit.Intent-MoveTo.IntentSlot-location"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Turn",
+        "confirmationRequired": false,
+        "prompts": {},
+        "slots": [
+          {
+            "name": "angle",
+            "type": "AMAZON.NUMBER",
+            "elicitationRequired": false,
+            "confirmationRequired": false,
+            "prompts": {}
+          },
+          {
+            "name": "angleUnit",
+            "type": "AngleUnit",
+            "elicitationRequired": false,
+            "confirmationRequired": false,
+            "prompts": {}
+          },
+          {
+            "name": "direction",
+            "type": "Direction",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicitation": "Elicit.Intent-Turn.IntentSlot-direction"
+            }
+          }
+        ]
+      }
+    ]
   }
 }

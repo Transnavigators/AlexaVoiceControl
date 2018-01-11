@@ -11,7 +11,7 @@
 var IOT_BROKER_ENDPOINT      = 'a1vgqh9vgvjzyh.iot.us-east-1.amazonaws.com';
 var IOT_BROKER_REGION        = 'us-east-1';
 var IOT_THING_NAME           = 'Pi';
-var skillAppID               = 'amzn1.ask.skill.cb64fd35-2d9a-4c28-a3a8-7c23168e1b9f';
+var SKILL_APP_ID             = 'amzn1.ask.skill.cb64fd35-2d9a-4c28-a3a8-7c23168e1b9f';
 
 //Loading AWS SDK libraries
 var AWS = require('aws-sdk');
@@ -117,42 +117,83 @@ function handleWheelchairCommand(intent, session, callback) {
     };
     
     if (intentName === 'Turn') {
-        payloadObj.state.desired.type = 'Turn';
+        // Turn type
+        payloadObj.state.desired.type = 'turn';
+        
+        // Set direction
         if (intent.slots.direction.value) {
-            speechOutput = 'Turning ' + intent.slots.direction.value;
             payloadObj.state.desired.direction = intent.slots.direction.value;
-            if (intent.slots.angle.value) {
-                payloadObj.state.desired.angle = intent.slots.angle.value;
-                speechOutput += ' ' + intent.slots.angle.value;
-            }
-            else {
-                payloadObj.state.desired.angle = 90;
-            }
-            payloadObj.state.desired.angleUnit = intent.slots.angleUnit.value;
+            speechOutput = 'Turning ' + payloadObj.state.desired.direction;
         }
         else {
-            repromptText = 'What direction';
+            // default is right
+            payloadObj.state.desired.direction = 'right';
+            speechOutput = 'Turning right';
         }
+        
+        // set angle if exists
+        if (intent.slots.angle.value && intent.slots.angle.value != '?') {
+            payloadObj.state.desired.angle = intent.slots.angle.value;
+            // set angle unit
+            if (intent.slots.angleUnit.value) {
+                payloadObj.state.desired.angleUnit = intent.slots.angleUnit.resolutions.resolutionsPerAuthority[0].values[0].value.name;
+            }
+            else {
+                // default is degrees
+                payloadObj.state.desired.angleUnit = 'degrees';
+            }
+            speechOutput += ' ' + payloadObj.state.desired.angle + ' ' + payloadObj.state.desired.angleUnit;
+        }
+        else {
+            // default is 90 degrees
+            payloadObj.state.desired.angle = 90;
+            payloadObj.state.desired.angleUnit = 'degrees';
+        }
+        
     } else if (intentName === 'AMAZON.StopIntent' || intentName === 'Stop') {
+        // Stop type
         speechOutput = 'Stopping';
-		payloadObj.state.desired.type = 'Stop';
+		payloadObj.state.desired.type = 'stop';
    	} else if (intentName === 'MoveForward') {
+   	    // Move forward type
    	    speechOutput = 'Moving Forward';
-		payloadObj.state.desired.type = 'Forward';
-		if (intent.slots.distance.value) {
+		payloadObj.state.desired.type = 'forward';
+		
+		// Set distance if exists
+		if (intent.slots.distance.value && intent.slots.distance.value != '?') {
 			payloadObj.state.desired.distance = intent.slots.distance.value;
-	    	payloadObj.state.desired.distanceUnit = intent.slots.distanceUnit.value;
-			speechOutput += ' ' + intent.slots.distance.value + ' ' + intent.slots.distanceUnit.value;
+			
+			// Get distance unit if it exists
+			if (intent.slots.distanceUnit.value) {
+			    payloadObj.state.desired.distanceUnit = intent.slots.distanceUnit.resolutions.resolutionsPerAuthority[0].values[0].value.name;
+			}
+			else {
+			    // default is feet
+			    payloadObj.state.desired.distanceUnit = 'feet';
+			}
+			
+			speechOutput += ' ' + payloadObj.state.desired.distance + ' ' + payloadObj.state.desired.distanceUnit;
 		}
+		
    	} else if (intentName === 'LocateMe'){
+   	    // Locate me type
    	    speechOutput = 'Transnavigating to you';
-		payloadObj.state.desired.type = 'Locate';
+		payloadObj.state.desired.type = 'locate';
    	} else if (intentName === 'MoveTo') {
-   	    payloadObj.state.desired.type = 'Move';
+   	    // Move to type
+   	    payloadObj.state.desired.type = 'move';
    	    speechOutput = 'Moving'
+   	    
+   	    // Get location
    	    if (intent.slots.location.value) {
-   	        payloadObj.state.desired.location = intent.slots.location.value;
-   	        speechOutput += " to the " + intent.slots.location.value;
+   	        payloadObj.state.desired.location = intent.slots.location.resolutions.resolutionsPerAuthority[0].values[0].value.name;
+   	        speechOutput += " to the " + payloadObj.state.desired.location;
+   	    }
+   	    else {
+   	        // reprompt if no location specified
+            speechOutput = 'Please repeat command and specify a location';
+            callback(sessionAttributes,buildSpeechletResponse(intent.name, speechOutput, repromptText, shouldEndSession));
+            return;
    	    }
    	}
     else{
@@ -163,8 +204,6 @@ function handleWheelchairCommand(intent, session, callback) {
     var paramsUpdate = {
         'thingName' : IOT_THING_NAME,
         'payload' : JSON.stringify(payloadObj)
-        //'topic' : '/update'
-        
     };
 	
     //Update Device Shadow
@@ -240,7 +279,7 @@ exports.handler = (event, context, callback) => {
         console.log(`event.session.application.applicationId=${event.session.application.applicationId}`);
 
         //Prevent someone else from configuring a skill that sends requests to this function.        
-        if (event.session.application.applicationId !== skillAppID) {
+        if (event.session.application.applicationId !== SKILL_APP_ID) {
              callback('Invalid Application ID');
         }
         
@@ -248,7 +287,6 @@ exports.handler = (event, context, callback) => {
         if (event.session.new) {
             onSessionStarted({ requestId: event.request.requestId }, event.session);
         }
-
         if (event.request.type === 'LaunchRequest') {
             onLaunch(event.request,
                 event.session,
@@ -269,4 +307,3 @@ exports.handler = (event, context, callback) => {
         callback(err);
     }
 };
-
