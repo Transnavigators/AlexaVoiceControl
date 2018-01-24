@@ -78,7 +78,7 @@ function handleSessionEndRequest(callback) {
    	var payloadObj= {
     	'state': {
     		'desired': {
-    		    'type':'Stop'
+    		    'type':'stop'
     		}
     	}
     };
