@@ -133,7 +133,7 @@ function handleWheelchairCommand(intent, session, callback) {
         
         // set angle if exists
         if (intent.slots.angle.value && intent.slots.angle.value != '?') {
-            payloadObj.state.desired.angle = intent.slots.angle.value;
+            payloadObj.state.desired.angle = parseInt(intent.slots.angle.value);
             // set angle unit
             if (intent.slots.angleUnit.value) {
                 payloadObj.state.desired.angleUnit = intent.slots.angleUnit.resolutions.resolutionsPerAuthority[0].values[0].value.name;
@@ -161,7 +161,7 @@ function handleWheelchairCommand(intent, session, callback) {
 		
 		// Set distance if exists
 		if (intent.slots.distance.value && intent.slots.distance.value != '?') {
-			payloadObj.state.desired.distance = intent.slots.distance.value;
+			payloadObj.state.desired.distance = parseInt(intent.slots.distance.value);
 			
 			// Get distance unit if it exists
 			if (intent.slots.distanceUnit.value) {
