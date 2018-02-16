@@ -1,5 +1,32 @@
 # Voice Control Interface
 
+Voice Control Interface controls the Transnavigators' Voice Controlled Wheelchair.  This interface allows users to speak commands to an Echo (Dot) which will send messages to direct the wheelchair based on the commands given.  Upon receiving a message, Alexa will confirm the message and the wheelchair will begin moving.
+
+A typical exchange is a follows:
+
+> * User: "Start my wheelchair"
+> * Alexa: "Welcome to the Transnavigators' Voice Controlled Wheelchair"
+> * User: "Come to me"
+> * Alexa: "Transnavigating to you"
+> * User: "Move forward"
+> * Alexa: "Moving forward"
+> * User: "Stop"
+> * Alexa: "Stopping"
+> * User: "Turn left 45 degrees"
+> * Alexa: "Turning left 45 degrees"
+> * User: "Bring me to the couch"
+> * Alexa: "Moving to the couch"
+> * User: "Exit"
+
+The interface consists of three files:
+
+* Alexa Interface
+* Lambda Function
+* Receive Script
+
+The Alexa Interface is a JSON file that Alexa uses to recognize the commands a user can give.
+The Lambda Function runs in AWS Lambda and sends data through AWS IoT to the wheelchair.  It is written for Lambda's Node.js 6.10 runtime.
+The Receive Script is a test script written in Python that receives data from AWS and prints it to the console.  It requires the installation of AWSIoTPythonSDK.
 
 
 ## Alexa Interface
@@ -86,7 +113,7 @@ The Lambda Function transforms output from Alexa into the proper format for the 
 
 Receives messages from AWS and prints to stdout
 
-**data_json** : message in json format 
+`data_json` : the message in json format 
 
 
 ### Fields to Update

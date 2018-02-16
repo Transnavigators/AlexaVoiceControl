@@ -1,4 +1,4 @@
-# Recieve script
+# Receive script
 #
 # Receives messages from AWS and prints to stdout
 #
@@ -6,10 +6,6 @@
 # 
 
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
-from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTShadowClient
-import logging
-import time
-import argparse
 import json
 
 
