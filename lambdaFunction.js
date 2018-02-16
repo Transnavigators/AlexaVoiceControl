@@ -12,6 +12,8 @@ var IOT_BROKER_ENDPOINT      = 'a1vgqh9vgvjzyh.iot.us-east-1.amazonaws.com';
 var IOT_BROKER_REGION        = 'us-east-1';
 var IOT_THING_NAME           = 'Pi';
 var SKILL_APP_ID             = 'amzn1.ask.skill.cb64fd35-2d9a-4c28-a3a8-7c23168e1b9f';
+var TOPIC                    = '/Transnavigators/Pi';
+var QOS                      = 1;
 
 //Loading AWS SDK libraries
 var AWS = require('aws-sdk');
@@ -74,25 +76,21 @@ function handleSessionEndRequest(callback) {
     const speechOutput = 'Thank you for trying the Transnavigators\'s Voice Controlled Wheelchair. Have a nice day!';
     // Setting this to true ends the session and exits the skill.
     const shouldEndSession = true;
-	   	
-   	var payloadObj= {
-    	'state': {
-    		'desired': {
-    		    'type':'stop'
-    		}
-    	}
+	
+	// Stop command
+	var payload =  {'type':'stop'}
+	
+    // Prepare state information message
+    var data = {
+        'topic' : TOPIC,
+        'payload' : JSON.stringify(payload),
+        'qos' : QOS
     };
-    //Prepare the parameters of the update call
-    var paramsUpdate = {
-        'thingName' : IOT_THING_NAME,
-        'payload' : JSON.stringify(payloadObj)
-        
-    };
-    
-    //Update Device Shadow
-    iotData.updateThingShadow(paramsUpdate, function(err, data) {
+	
+    // Publish message
+    iotData.publish(data, function(err, data) {
       if (err) {
-        //Handle the error here
+        // Handle the error here
         callback('error'+err);
       }
       else {
@@ -109,85 +107,81 @@ function handleWheelchairCommand(intent, session, callback) {
     var sessionAttributes = {};
     var shouldEndSession = false;
     
-	   	
-   	var payloadObj= {
-    	'state': {
-    		'desired': {}
-    	}
-    };
+	// Holds movement data
+   	var payload= {};
     
     if (intentName === 'Turn') {
         // Turn type
-        payloadObj.state.desired.type = 'turn';
+        payload.type = 'turn';
         
         // Set direction
         if (intent.slots.direction.value) {
-            payloadObj.state.desired.direction = intent.slots.direction.value;
-            speechOutput = 'Turning ' + payloadObj.state.desired.direction;
+            payload.direction = intent.slots.direction.value;
+            speechOutput = 'Turning ' + payload.direction;
         }
         else {
             // default is right
-            payloadObj.state.desired.direction = 'right';
+            payload.direction = 'right';
             speechOutput = 'Turning right';
         }
         
         // set angle if exists
         if (intent.slots.angle.value && intent.slots.angle.value != '?') {
-            payloadObj.state.desired.angle = parseInt(intent.slots.angle.value);
+            payload.angle = parseInt(intent.slots.angle.value);
             // set angle unit
             if (intent.slots.angleUnit.value) {
-                payloadObj.state.desired.angleUnit = intent.slots.angleUnit.resolutions.resolutionsPerAuthority[0].values[0].value.name;
+                payload.angleUnit = intent.slots.angleUnit.resolutions.resolutionsPerAuthority[0].values[0].value.name;
             }
             else {
                 // default is degrees
-                payloadObj.state.desired.angleUnit = 'degrees';
+                payload.angleUnit = 'degrees';
             }
-            speechOutput += ' ' + payloadObj.state.desired.angle + ' ' + payloadObj.state.desired.angleUnit;
+            speechOutput += ' ' + payload.angle + ' ' + payload.angleUnit;
         }
         else {
             // default is 90 degrees
-            payloadObj.state.desired.angle = 90;
-            payloadObj.state.desired.angleUnit = 'degrees';
+            payload.angle = 90;
+            payload.angleUnit = 'degrees';
         }
         
     } else if (intentName === 'AMAZON.StopIntent' || intentName === 'Stop') {
         // Stop type
         speechOutput = 'Stopping';
-		payloadObj.state.desired.type = 'stop';
+		payload.type = 'stop';
    	} else if (intentName === 'MoveForward') {
    	    // Move forward type
    	    speechOutput = 'Moving Forward';
-		payloadObj.state.desired.type = 'forward';
+		payload.type = 'forward';
 		
 		// Set distance if exists
 		if (intent.slots.distance.value && intent.slots.distance.value != '?') {
-			payloadObj.state.desired.distance = parseInt(intent.slots.distance.value);
+			payload.distance = parseInt(intent.slots.distance.value);
 			
 			// Get distance unit if it exists
 			if (intent.slots.distanceUnit.value) {
-			    payloadObj.state.desired.distanceUnit = intent.slots.distanceUnit.resolutions.resolutionsPerAuthority[0].values[0].value.name;
+			    payload.distanceUnit = intent.slots.distanceUnit.resolutions.resolutionsPerAuthority[0].values[0].value.name;
 			}
 			else {
 			    // default is feet
-			    payloadObj.state.desired.distanceUnit = 'feet';
+			    payload.distanceUnit = 'feet';
 			}
 			
-			speechOutput += ' ' + payloadObj.state.desired.distance + ' ' + payloadObj.state.desired.distanceUnit;
+			speechOutput += ' ' + payload.distance + ' ' + payload.distanceUnit;
 		}
 		
    	} else if (intentName === 'LocateMe'){
    	    // Locate me type
    	    speechOutput = 'Transnavigating to you';
-		payloadObj.state.desired.type = 'locate';
+		payload.type = 'locate';
    	} else if (intentName === 'MoveTo') {
    	    // Move to type
-   	    payloadObj.state.desired.type = 'move';
+   	    payload.type = 'move';
    	    speechOutput = 'Moving'
    	    
    	    // Get location
    	    if (intent.slots.location.value) {
-   	        payloadObj.state.desired.location = intent.slots.location.resolutions.resolutionsPerAuthority[0].values[0].value.name;
-   	        speechOutput += " to the " + payloadObj.state.desired.location;
+   	        payload.location = intent.slots.location.resolutions.resolutionsPerAuthority[0].values[0].value.name;
+   	        speechOutput += " to the " + payload.location;
    	    }
    	    else {
    	        // reprompt if no location specified
@@ -200,16 +194,17 @@ function handleWheelchairCommand(intent, session, callback) {
         throw new Error('Invalid intent');
     }
 
-    //Prepare the parameters of the update call
-    var paramsUpdate = {
-        'thingName' : IOT_THING_NAME,
-        'payload' : JSON.stringify(payloadObj)
+    // Prepare state information data
+    var data = {
+        'topic' : TOPIC,
+        'payload' : JSON.stringify(payload),
+        'qos' : QOS
     };
 	
-    //Update Device Shadow
-    iotData.updateThingShadow(paramsUpdate, function(err, data) {
+    // Publish message
+    iotData.publish(data, function(err, data) {
       if (err) {
-        //Handle the error here
+        // Handle the error here
         callback('error'+err);
       }
       else {
