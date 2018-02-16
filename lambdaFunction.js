@@ -3,8 +3,11 @@
 /**
  * Wheelchair Controller Lambda Function
  *
+ * Transforms output from Alexa into the proper format for the wheelchair.
+ * All messages sent using AWS IoT to the topic /Transnavigators/Pi.
  *
- *
+ * @author Transnavigators
+ * 
  */
 
 //Environment Configuration

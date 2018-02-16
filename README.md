@@ -17,7 +17,7 @@ The Alexa Interface defines 8 different intents for interfacing with the wheelch
 * **LocateMe** : Finds the user
 * **AMAZON.CancelIntent** : Cancel required for certification
 * **AMAZON.HelpIntent** : Help required for certification
-* **AMAZON.StopIntent** : Stop required for certification (Does the same thing as the Stop intent
+* **AMAZON.StopIntent** : Stop required for certification (Does the same thing as the Stop intent)
 
 
 ## Lambda Function
@@ -86,7 +86,7 @@ The Lambda Function transforms output from Alexa into the proper format for the 
 
 Receives messages from AWS and prints to stdout
 
-*data_json* : message in json format 
+**data_json** : message in json format 
 
 
 ### Fields to Update
@@ -96,4 +96,4 @@ Receives messages from AWS and prints to stdout
 * `certificatePath` : Path to the *.cert.pem file
 * `privateKeyPath` : Path to the *.private.key file
 * `clientId` : Thing name
-* `topic` : Topic lambda function is publishing to
+* `topic` : Topic that the lambda function is publishing to

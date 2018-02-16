@@ -1,3 +1,10 @@
+# Recieve script
+#
+# Receives messages from AWS and prints to stdout
+#
+# @author Transnavigators
+# 
+
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTShadowClient
 import logging
