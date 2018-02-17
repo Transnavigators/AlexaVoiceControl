@@ -256,7 +256,8 @@
           "Stop moving",
           "Don't go",
           "Freeze",
-          "Stay"
+          "Stay",
+          "Abort"
         ],
         "slots": []
       },

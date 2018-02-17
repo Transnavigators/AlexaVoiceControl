@@ -7,7 +7,7 @@
  * All messages sent using AWS IoT to the topic /Transnavigators/Pi.
  *
  * @author Transnavigators
- * 
+ *
  */
 
 //Environment Configuration
@@ -76,7 +76,7 @@ function getWelcomeResponse(callback) {
 
 function handleSessionEndRequest(callback) {
     const cardTitle = 'Session Ended';
-    const speechOutput = 'Thank you for trying the Transnavigators\'s Voice Controlled Wheelchair. Have a nice day!';
+    const speechOutput = 'Thank you for trying the Transnavigators\' Voice Controlled Wheelchair. Have a nice day!';
     // Setting this to true ends the session and exits the skill.
     const shouldEndSession = true;
 	
