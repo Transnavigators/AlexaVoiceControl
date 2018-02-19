@@ -4,19 +4,19 @@ Voice Control Interface controls the Transnavigators' Voice Controlled Wheelchai
 
 A typical exchange is a follows:
 
-> * User: "Start my wheelchair"
-> * Alexa: "Welcome to the Transnavigators' Voice Controlled Wheelchair"
-> * User: "Come to me"
-> * Alexa: "Transnavigating to you"
-> * User: "Move forward"
-> * Alexa: "Moving forward"
-> * User: "Stop"
-> * Alexa: "Stopping"
-> * User: "Turn left 45 degrees"
-> * Alexa: "Turning left 45 degrees"
-> * User: "Bring me to the couch"
-> * Alexa: "Moving to the couch"
-> * User: "Exit"
+* User: "Start my wheelchair"
+* Alexa: "Welcome to the Transnavigators' Voice Controlled Wheelchair"
+* User: "Come to me"
+* Alexa: "Transnavigating to you"
+* User: "Move forward"
+* Alexa: "Moving forward"
+* User: "Stop"
+* Alexa: "Stopping"
+* User: "Turn left 45 degrees"
+* Alexa: "Turning left 45 degrees"
+* User: "Bring me to the couch"
+* Alexa: "Moving to the couch"
+* User: "Exit"
 
 The interface consists of three files:
 
@@ -42,7 +42,7 @@ The Alexa Interface defines 8 different intents for interfacing with the wheelch
 * **Stop** : Overrides the default Stop Intent for stopping the wheelchair
 * **MoveTo** : Moves to a specified location
 * **LocateMe** : Finds the user
-* **AMAZON.CancelIntent** : Cancel required for certification
+* **AMAZON.CancelIntent** : Cancel required for certification (Closes the skill)
 * **AMAZON.HelpIntent** : Help required for certification
 * **AMAZON.StopIntent** : Stop required for certification (Does the same thing as the Stop intent)
 
@@ -70,7 +70,7 @@ The Lambda Function transforms output from Alexa into the proper format for the 
 {
   "type" : "forward" 
   "distance" : How far to move forward (optional: empty means infinity)
-  "distanceUnit" : Units for the distance number (optional: empty means infinity)
+  "distanceUnit" : Units for the distance number ("meters" or "feet") (optional: empty means infinity)
 }
 ```
 
@@ -79,8 +79,9 @@ The Lambda Function transforms output from Alexa into the proper format for the 
 ```
 {
   "type" : "turn" 
+  "direction" : "left" or "right"
   "angle" : Number of degrees to turn
-  "angleUnit" : "degrees"
+  "angleUnit" : "degrees" or "radians"
 }
 ```
 
@@ -122,5 +123,5 @@ Receives messages from AWS and prints to stdout
 * `rootCAPath` : Path to the root-CA.crt file
 * `certificatePath` : Path to the *.cert.pem file
 * `privateKeyPath` : Path to the *.private.key file
-* `clientId` : Thing name
+* `clientId` : Unique name
 * `topic` : Topic that the lambda function is publishing to

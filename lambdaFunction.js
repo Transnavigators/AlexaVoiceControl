@@ -118,7 +118,7 @@ function handleWheelchairCommand(intent, session, callback) {
         payload.type = 'turn';
         
         // Set direction
-        if (intent.slots.direction.value) {
+        if (intent.slots.direction.value == "right" || intent.slots.direction.value == "left") {
             payload.direction = intent.slots.direction.value;
             speechOutput = 'Turning ' + payload.direction;
         }
