@@ -118,7 +118,7 @@ function handleWheelchairCommand(intent, session, callback) {
         payload.type = 'turn';
         
         // Set direction
-        if (intent.slots.direction.value == "right" || intent.slots.direction.value == "left") {
+        if (intent.slots.direction.value == 'right' || intent.slots.direction.value == 'left') {
             payload.direction = intent.slots.direction.value;
             speechOutput = 'Turning ' + payload.direction;
         }
@@ -176,6 +176,9 @@ function handleWheelchairCommand(intent, session, callback) {
    	    // Locate me type
    	    speechOutput = 'Transnavigating to you';
 		payload.type = 'locate';
+        
+        // Not implemented so change speech
+        speechOutput = 'Navigating to the user is not supported in this version of the system'
    	} else if (intentName === 'MoveTo') {
    	    // Move to type
    	    payload.type = 'move';
@@ -184,14 +187,11 @@ function handleWheelchairCommand(intent, session, callback) {
    	    // Get location
    	    if (intent.slots.location.value) {
    	        payload.location = intent.slots.location.resolutions.resolutionsPerAuthority[0].values[0].value.name;
-   	        speechOutput += " to the " + payload.location;
+   	        speechOutput += ' to the ' + payload.location;
    	    }
-   	    else {
-   	        // reprompt if no location specified
-            speechOutput = 'Please repeat command and specify a location';
-            callback(sessionAttributes,buildSpeechletResponse(intent.name, speechOutput, repromptText, shouldEndSession));
-            return;
-   	    }
+        
+        // Not implemented so change speech
+        speechOutput = 'Moving to a location is not supported in this version of the system'
    	}
     else{
         throw new Error('Invalid intent');
