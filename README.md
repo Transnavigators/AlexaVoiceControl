@@ -69,8 +69,8 @@ The Lambda Function transforms output from Alexa into the proper format for the 
 ```
 {
   "type" : "forward" 
-  "distance" : How far to move forward (optional: empty means infinity)
-  "distanceUnit" : Units for the distance number ("meters" or "feet") (optional: empty means infinity)
+  "distance" : How far to move forward
+  "distanceUnit" : Units for the distance number ("meters" or "feet") (optional: empty means feet)
 }
 ```
 
@@ -93,7 +93,7 @@ The Lambda Function transforms output from Alexa into the proper format for the 
 }
 ```
 
-* **MoveTo**
+* **MoveTo** (unimplemented in the final version of the chair)
 
 ```
 {
@@ -102,7 +102,7 @@ The Lambda Function transforms output from Alexa into the proper format for the 
 }
 ```
 
-* **LocateMe**
+* **LocateMe** (unimplemented in the final version of the chair)
 
 ```
 {

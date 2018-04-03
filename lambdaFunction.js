@@ -153,11 +153,11 @@ function handleWheelchairCommand(intent, session, callback) {
 		payload.type = 'stop';
    	} else if (intentName === 'MoveForward') {
    	    // Move forward type
-   	    speechOutput = 'Moving Forward';
-		payload.type = 'forward';
-		
-		// Set distance if exists
+   	    // Must specify a distance
 		if (intent.slots.distance.value && intent.slots.distance.value != '?') {
+       	    speechOutput = 'Moving Forward';
+    		payload.type = 'forward';
+    		
 			payload.distance = parseInt(intent.slots.distance.value);
 			
 			// Get distance unit if it exists
