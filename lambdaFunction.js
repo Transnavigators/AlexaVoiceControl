@@ -111,7 +111,7 @@ function handleWheelchairCommand(intent, session, callback) {
     var shouldEndSession = false;
     
 	// Holds movement data
-   	var payload= {};
+   	var payload = {};
     
     if (intentName === 'Turn') {
         // Turn type
@@ -197,23 +197,31 @@ function handleWheelchairCommand(intent, session, callback) {
         throw new Error('Invalid intent');
     }
 
-    // Prepare state information data
-    var data = {
-        'topic' : TOPIC,
-        'payload' : JSON.stringify(payload),
-        'qos' : QOS
-    };
-	
-    // Publish message
-    iotData.publish(data, function(err, data) {
-      if (err) {
-        // Handle the error here
-        callback('error'+err);
-      }
-      else {
+
+
+    // send message if it exists
+    if (!(Object.keys(payload).length === 0 && payload.constructor === Object)) {
+        // Prepare state information data
+        var data = {
+            'topic' : TOPIC,
+            'payload' : JSON.stringify(payload),
+            'qos' : QOS
+        };
+    	
+        // Publish message
+        iotData.publish(data, function(err, data) {
+          if (err) {
+            // Handle the error here
+            callback('error'+err);
+          }
+          else {
+            callback(sessionAttributes,buildSpeechletResponse(intent.name, speechOutput, repromptText, shouldEndSession));
+          }
+        });
+    }
+    else {
         callback(sessionAttributes,buildSpeechletResponse(intent.name, speechOutput, repromptText, shouldEndSession));
-      }
-    });
+    }
 
 }
 
