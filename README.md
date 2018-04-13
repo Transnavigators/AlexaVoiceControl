@@ -40,8 +40,8 @@ The Alexa Interface defines 8 different intents for interfacing with the wheelch
 * **MoveForward** : Moves forward
 * **Turn** : Turns the wheelchair a certain number of degrees
 * **Stop** : Overrides the default Stop Intent for stopping the wheelchair
-* **MoveTo** : Moves to a specified location
-* **LocateMe** : Finds the user
+* **MoveTo** : Moves to a specified location (unimplemented in the final version of the chair)
+* **LocateMe** : Finds the user (unimplemented in the final version of the chair)
 * **AMAZON.CancelIntent** : Cancel required for certification (Closes the skill)
 * **AMAZON.HelpIntent** : Help required for certification
 * **AMAZON.StopIntent** : Stop required for certification (Does the same thing as the Stop intent)
