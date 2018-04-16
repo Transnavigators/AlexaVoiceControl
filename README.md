@@ -6,17 +6,14 @@ A typical exchange is a follows:
 
 * User: "Start my wheelchair"
 * Alexa: "Welcome to the Transnavigators' Voice Controlled Wheelchair"
-* User: "Come to me"
-* Alexa: "Transnavigating to you"
-* User: "Move forward"
-* Alexa: "Moving forward"
-* User: "Stop"
-* Alexa: "Stopping"
+* User: "Move forward 10 feet "
+* Alexa: "Moving forward 10 feet"
 * User: "Turn left 45 degrees"
 * Alexa: "Turning left 45 degrees"
-* User: "Bring me to the couch"
-* Alexa: "Moving to the couch"
+* User: "Turn more forward 15 feet"
+* Alexa: "Moving forward 15 feet"
 * User: "Exit"
+
 
 The interface consists of three files:
 
@@ -40,8 +37,8 @@ The Alexa Interface defines 8 different intents for interfacing with the wheelch
 * **MoveForward** : Moves forward
 * **Turn** : Turns the wheelchair a certain number of degrees
 * **Stop** : Overrides the default Stop Intent for stopping the wheelchair
-* **MoveTo** : Moves to a specified location
-* **LocateMe** : Finds the user
+* **MoveTo** : Moves to a specified location (unimplemented in the final version of the chair)
+* **LocateMe** : Finds the user (unimplemented in the final version of the chair)
 * **AMAZON.CancelIntent** : Cancel required for certification (Closes the skill)
 * **AMAZON.HelpIntent** : Help required for certification
 * **AMAZON.StopIntent** : Stop required for certification (Does the same thing as the Stop intent)
